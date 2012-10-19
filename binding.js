@@ -18,8 +18,8 @@ d3binding.binding = function() {
         return that;
     };
 
-    var common = function(that, name, value, funcname) {
-        that.expand(function(selection) {
+    var common = function(hoge, name, value, funcname) {
+        hoge.expand(function(selection) {
             selection[funcname](name, function(d) {
                 var s = d3.select(this);
                 var v = value;
@@ -28,7 +28,7 @@ d3binding.binding = function() {
                     if (v.prototype === sb.Observable) {
                         var o = v;
                         sb.binding(o, function() {
-                            if (that.isTransition) {
+                            if (hoge.isTransition) {
                                 if (name !== null) {
                                     (s.transition())[funcname](name, o());
                                 } else {
