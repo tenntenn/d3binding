@@ -18,8 +18,9 @@ d3binding.binding = function() {
         return that;
     };
 
-    var common = function(hoge, name, value, funcname) {
-        hoge.expand(function(selection) {
+    // 第一引数おかしいよ。
+    var common = function(b, name, value, funcname) {
+        b.expand(function(selection) {
             selection[funcname](name, function(d) {
                 var s = d3.select(this);
                 var v = value;
@@ -28,7 +29,7 @@ d3binding.binding = function() {
                     if (v.prototype === sb.Observable) {
                         var o = v;
                         sb.binding(o, function() {
-                            if (hoge.isTransition) {
+                            if (b.isTransition) {
                                 if (name !== null) {
                                     (s.transition())[funcname](name, o());
                                 } else {
