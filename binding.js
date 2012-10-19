@@ -27,7 +27,7 @@ d3binding.binding = function() {
                     v = v(d);
                     if (v.prototype === sb.Observable) {
                         var o = v;
-                        sb.bindding(o, function() {
+                        sb.binding(o, function() {
                             if (that.isTransition) {
                                 if (name !== null) {
                                     s.transition()[funcname](name, o());
