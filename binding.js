@@ -1,11 +1,13 @@
+(function() {
 d3binding.binding = function() {
 
     var that = d3binding.expandable();
     that.isTransition = false;
 
     that.transition = function() {
-        if (!that.isTransition) {
-            var newThat = d3binding.expandable(that);
+        if (!that.isTransition && that.expand) {
+            var newThat = d3binding.binding();
+            newThat.expand(that.funcs);
             newThat.isTransition = true;
             return newThat;
         }
@@ -13,60 +15,62 @@ d3binding.binding = function() {
         return that;
     };
 
-    var common = function(that, name, value, funcname) {
-        that.expand(function(selection) {
-            selection[funcname](name, function(d) {
-                var s = d3.select(this);
-                var v = value;
-                if (typeof v === "function") {
-                    v = v(d);
-                    if (v.prototype === sb.Observable) {
-                        var o = v;
-                        sb.binding(o, function() {
-                            if (that.isTransition) {
-                                if (name !== null) {
-                                    (s.transition())[funcname](name, o());
-                                } else {
-                                    (s.transition())[funcname](o());
-                                }
-                            } else {
-                                if (name !== null) {
-                                    s[funcname](name, o());
-                                } else {
-                                    s[funcname](o());
-                                }
-                            }
-                        }).bind();
-                        v = o();
-                    }
-                }
-
-                return v;
-            });
-        });
-
-        return that;
-    }
-
     that.attr = function(name, value) {
-        return common(this, name, value, "attr");
+        return common(that, name, value, "attr");
     };
 
     that.style = function(name, value) {
-        return common(this, name, value, "style");
+        return common(that, name, value, "style");
     };
 
     that.classed = function(name, value) {
-        return common(this, name, value, "classed");
+        return common(that, name, value, "classed");
     };
 
     that.text = function(value) {
-        return common(this, null, value, "text");
+        return common(that, null, value, "text");
     };
-   
+
     that.html = function(value) {
-        return common(this, null, value, "classed");
+        return common(that, null, value, "classed");
     };
 
     return that;
 };
+
+var common = function(that, name, value, funcname) {
+    var newThat = that.expand(function(selection) {
+        selection[funcname](name, function(d) {
+            var s = d3.select(this);
+            var v = value;
+            if (typeof v === "function") {
+                v = v(d);
+                if (v.prototype === sb.Observable) {
+                    var o = v;
+                    sb.binding(o, function() {
+                        if (that.isTransition) {
+                            if (name !== null) {
+                                (s.transition())[funcname](name, o());
+                            } else {
+                                (s.transition())[funcname](o());
+                            }
+                        } else {
+                            if (name !== null) {
+                                s[funcname](name, o());
+                            } else {
+                                s[funcname](o());
+                            }
+                        }
+                    }).bind();
+                    v = o();
+                }
+            }
+
+            return v;
+        });
+    });
+
+    return newThat;
+}
+
+})();

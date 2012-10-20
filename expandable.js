@@ -1,15 +1,19 @@
 d3binding.expandable = function() {
     
-    var funcs = [];
-
     // created function
     var that = function() {
-        var args = arguments;
-        funcs.forEach(function(f) {
+        var args = [];
+        for (i in arguments) {
+            if (arguments.hasOwnProperty(i)) {
+                args.push(arguments[i]);
+            }
+        }
+        that.funcs.forEach(function(f) {
             f.apply(that, args);
         });
     };
 
+    that.funcs = [];
 
     var args = arguments;
     for (i in args) {
@@ -19,23 +23,16 @@ d3binding.expandable = function() {
                     that[key] = args[i][key];
                 }
             });
-            funcs.push(args[i]);
+            that.funcs.push(args[i]);
         } 
     }
 
     // expand function
     that.expand = function(newFunc) {
         if (typeof newFunc === "function") {
-            newThat = d3binding.expandable.apply(this, funcs.concat(newFunc));
-            Object.keys(that).forEach(function(key){
-                if (that.hasOwnProperty(key)) {
-                    newThat[key] = that[key];
-                }
-            });
-            return newThat; 
-        } else {
-            return that;
+            that.funcs.push(newFunc);
         }
+        return that;
     };
 
     return that;
