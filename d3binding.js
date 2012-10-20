@@ -52,7 +52,7 @@ d3binding.binding = function() {
     that.transition = function() {
         if (!that.isTransition && that.expand) {
             var newThat = d3binding.binding();
-            newThat.expand(that.funcs);
+            newThat.funcs = that.funcs;
             newThat.isTransition = true;
             return newThat;
         }
