@@ -6,11 +6,6 @@ d3binding.binding = function() {
     that.transition = function() {
         if (!that.isTransition) {
             var newThat = d3binding.expandable(that);
-            for (key in that) {
-                if (that.hasOwnProperty(key)) {
-                    newThat[key] = that[key];
-                }
-            }
             newThat.isTransition = true;
             return newThat;
         }
