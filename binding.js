@@ -1,6 +1,6 @@
 d3binding.binding = function() {
 
-    var that = d3binding.expandable(function(selection) {});
+    var that = d3binding.expandable();
     that.isTransition = false;
 
     that.transition = function() {

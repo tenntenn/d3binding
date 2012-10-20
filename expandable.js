@@ -2,12 +2,6 @@ d3binding.expandable = function() {
     
     var funcs = [];
 
-    for (arg in arguments) {
-        if (typeof arg === "function") {
-            funcs.push(arg);
-        } 
-    }
-
     // created function
     var that = function() {
         var args = arguments;
@@ -15,6 +9,18 @@ d3binding.expandable = function() {
             f.apply(that, args);
         });
     };
+
+
+    for (arg in arguments) {
+        if (typeof arg === "function") {
+            Object.keys(arg).forEach(function(key){
+                if (arg.hasownproperty(key)) {
+                    that[key] = arg[key];
+                }
+            });
+            funcs.push(arg);
+        } 
+    }
 
     // expand function
     that.expand = function(newFunc) {
