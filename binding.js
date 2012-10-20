@@ -11,7 +11,6 @@ d3binding.binding = function() {
             newThat.isTransition = true;
             return newThat;
         }
-
         return that;
     };
 
@@ -39,15 +38,15 @@ d3binding.binding = function() {
 };
 
 var common = function(that, name, value, funcname) {
-    var newThat = that.expand(function(selection) {
+    that.expand(function(selection) {
         selection[funcname](name, function(d) {
             var s = d3.select(this);
             var v = value;
             if (typeof v === "function") {
                 v = v(d);
-                if (v.prototype === sb.Observable) {
+                if (sb.isObservable(v)) {
                     var o = v;
-                    sb.binding(o, function() {
+                    o.callback = function() {
                         if (that.isTransition) {
                             if (name !== null) {
                                 (s.transition())[funcname](name, o());
@@ -61,7 +60,7 @@ var common = function(that, name, value, funcname) {
                                 s[funcname](o());
                             }
                         }
-                    }).bind();
+                    };
                     v = o();
                 }
             }
@@ -70,7 +69,7 @@ var common = function(that, name, value, funcname) {
         });
     });
 
-    return newThat;
+    return that;
 }
 
 })();
