@@ -11,14 +11,15 @@ d3binding.expandable = function() {
     };
 
 
-    for (arg in arguments) {
-        if (typeof arg === "function") {
-            Object.keys(arg).forEach(function(key){
-                if (arg.hasownproperty(key)) {
-                    that[key] = arg[key];
+    var args = arguments;
+    for (i in args) {
+        if (typeof args[i] === "function") {
+            Object.keys(args[i]).forEach(function(key){
+                if (args[i].hasownproperty(key)) {
+                    that[key] = args[i][key];
                 }
             });
-            funcs.push(arg);
+            funcs.push(args[i]);
         } 
     }
 
