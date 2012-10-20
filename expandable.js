@@ -1,22 +1,25 @@
 d3binding.expandable = function(fnc) {
+    
+    var funcs;
 
     if (typeof fnc !== "function") {
         fnc = function() {};
     }
 
+    funcs = [fnc];
+
     // created function
     var that = function() {
-        fnc.apply(that, arguments);
+        funcs.forEach(function(f) {
+            f.apply(that, arguments);
+        });
     };
 
     // expand function
     that.expand = function(newFunc) {
-        var f = fnc;
-        fnc = function() {
-            f.apply(that, arguments);
-            newFunc.apply(that, arguments);
-        };
-
+        if (typeof newFunc === "function") {
+            funcs.push(newFunc);
+        }
         return that;
     };
 

@@ -18,7 +18,6 @@ d3binding.binding = function() {
         return that;
     };
 
-    // 第一引数おかしいよ。
     var common = function(that, name, value, funcname) {
         that.expand(function(selection) {
             selection[funcname](name, function(d) {
