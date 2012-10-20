@@ -11,7 +11,7 @@ d3binding.expandable = function(fnc) {
     // created function
     var that = function() {
         funcs.forEach(function(f) {
-            f.apply(that, arguments);
+            f.apply(this, arguments);
         });
     };
 
