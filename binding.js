@@ -46,21 +46,22 @@ var common = function(that, name, value, funcname) {
                 v = v(d);
                 if (sb.isObservable(v)) {
                     var o = v;
-                    o.callback = function() {
-                        if (that.isTransition) {
-                            if (name !== null) {
-                                (s.transition())[funcname](name, o());
+                    sb.binding(o)
+                        .onChange(o, function() {
+                            if (that.isTransition) {
+                                if (name !== null) {
+                                    (s.transition())[funcname](name, o());
+                                } else {
+                                    (s.transition())[funcname](o());
+                                }
                             } else {
-                                (s.transition())[funcname](o());
+                                if (name !== null) {
+                                    s[funcname](name, o());
+                                } else {
+                                    s[funcname](o());
+                                }
                             }
-                        } else {
-                            if (name !== null) {
-                                s[funcname](name, o());
-                            } else {
-                                s[funcname](o());
-                            }
-                        }
-                    };
+                        }).bind();
                     v = o();
                 }
             }
