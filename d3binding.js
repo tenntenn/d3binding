@@ -199,7 +199,7 @@ var common = function(that, name, value, funcname) {
         that.translate = function(x, y) {
             if (sb.isObservable(x)
                     && sb.isObservable(y)) {
-                translate.observable = sb.observable("");
+                translate.observable("translate("+x()+","+y()+")");
                 translate.binding = sb.binding(translate.observable, x, y)
                     .compute(translate.observable, function() {
                         return "translate("+x()+","+y()+")";
@@ -211,7 +211,7 @@ var common = function(that, name, value, funcname) {
         that.scale = function(sx, sy) {
              if (sb.isObservable(sx)
                     && sb.isObservable(sy)) {
-                scale.observable = sb.observable("");
+                scale.observable("scale("+sx()+","+sy()+")");
                 scale.binding = sb.binding(scale.observable, sx, sy)
                     .compute(scale.observable, function() {
                         return "scale("+sx()+","+sy()+")";
@@ -224,16 +224,17 @@ var common = function(that, name, value, funcname) {
         that.rotate = function(angle, cx, cy) {
             if (sb.isObservable(angle)) {
 
-                rotate.observable = sb.observable("");
                 if (sb.isObservable(cy)
                         && sb.isObservable(cx)) {
+                    rotate.observable("rotate("+angle()+","+cx()+","+cy()+")");
                     rotate.binding = sb.binding(rotate.observable, angle, cx, cy)
                         .compute(rotate.observable, function() {
                             return "rotate("+angle()+","+cx()+","+cy()+")";
                         }).bind();
                 } else {
+                    rotate.observable("rotate("+angle()+")");
                     rotate.binding = sb.binding(rotate.observable, angle)
-                        .compute(that, function() {
+                        .compute(rotate.observable, function() {
                             return "rotate("+angle()+")";
                         }).bind();
                 }
@@ -244,7 +245,7 @@ var common = function(that, name, value, funcname) {
 
         that.skewX = function(angle) { 
             if (sb.isObservable(angle)) {
-                skewX.observable = sb.observable("");
+                skewX.observable("skewX("+angle()+")");
                 skewX.binding = sb.binding(skewX.observable, angle)
                     .compute(skewX.observable, function() {
                         return "skewX("+angle()+")";
@@ -256,7 +257,7 @@ var common = function(that, name, value, funcname) {
 
         that.skewY = function(angle) {
             if (sb.isObservable(angle)) {
-                skewY.observable = sb.observable("");
+                skewY.observable("skewY("+angle()+")");
                 skewY.binding = sb.binding(skewY.observable, angle)
                     .compute(skewY.observable, function() {
                         return "skewY("+angle()+")";
@@ -273,7 +274,7 @@ var common = function(that, name, value, funcname) {
                     && sb.isObservable(d)
                     && sb.isObservable(e)
                     && sb.isObservable(e)) {
-                matrix.observable = sb.observable("");
+                matrix.observable("matrix("+a()+","+b()+","+c()+","+d()+","+e()+","+f()+")");
                 matrix.binding = sb.binding(matrix.observable, a, b, c, d, e, f)
                     .compute(matrix.observable, function() {
                         return "matrix("+a()+","+b()+","+c()+","+d()+","+e()+","+f()+")";
