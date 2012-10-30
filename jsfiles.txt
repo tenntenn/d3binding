@@ -1,5 +1,4 @@
 simple-binding.min.js
 package.js
-expandable.js
 binding.js
 transform.js

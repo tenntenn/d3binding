@@ -1,7 +1,7 @@
 (function() {
 d3binding.binding = function() {
 
-    var that = d3binding.expandable();
+    var that = sb.expandable();
     that.isTransition = false;
 
     that.transition = function() {

@@ -1,56 +1,20 @@
-var sb={BindingMaster:function(){var c=[];this.add=function(b){null===b||"undefined"===typeof b||0>c.indexOf(b)&&c.push(b)};this.notify=function(b,d){c.filter(function(a){var b=!1;Object.keys(a.inputs).forEach(function(c){a.inputs.hasOwnProperty(c)&&a.inputs[c]===d&&(b=!0)});return b}).forEach(function(a){a.notify(b)})};this.remove=function(b){b=c.lastIndexOf(b);0<=b&&c.splice(b,1)}},Binding:function(c,b,d,a){this.inputs=b;this.outputs=d;this.compute=a;this.bind=function(){c.add(this);return this};
-this.unbind=function(){c.remove(this);return this};this.notify=function(c){var f=a(b),g=c[c.length-1];Object.keys(f).forEach(function(a){var b=d[a];g!==b&&(d.hasOwnProperty(a)&&sb.isObservable(b))&&b.notify(c,f[a])});return this}},Observable:function(c,b){var d=function(a){void 0!==a&&d.notify([],a);return b};d.notify=function(a,e){0>a.lastIndexOf(d)&&(b=e,c.notify(a.concat(d),d))};d.observable=this;this.property=d},isObservable:function(c){return c instanceof sb.Observable||c.observable&&c.observable instanceof
-sb.Observable?!0:!1}};
-(function(){sb.BindingChain=function(c,b){var d=[];this.synchronize=function(){var a=[],e=arguments;Object.keys(e).forEach(function(c){c=e[c];sb.isObservable(c)&&0<=b.indexOf(c)&&a.push(c)});a.forEach(function(b){var e={input:b},h={};a.forEach(function(a,c){b!==a&&(h["output"+c]=a)});e=new sb.Binding(c,e,h,function(a){var b={};Object.keys(h).forEach(function(c){b[c]=a.input()});return b});d.push(e)});return this};this.compute=function(a,e){if(!sb.isObservable(a)||"function"!==typeof e||0>b.indexOf(a))return this;
-var f={};b.forEach(function(b,c){a!==b&&(f["input"+c]=b)});var g=new sb.Binding(c,f,{output:a},function(a){return{output:e(a)}});d.push(g);return this};this.onChange=function(a,e){if(!sb.isObservable(a)||"function"!==typeof e||0>b.indexOf(a))return this;var f=new sb.Binding(c,{input:a},{},function(){e();return{}});d.push(f);return this};this.bind=function(){d.forEach(function(a){a.bind()});return this};this.unbind=function(){d.forEach(function(a){a.unbind()});return this}}})();
-(function(){var c=new sb.BindingMaster;sb.binding=function(){var b=[],d=arguments;Object.keys(d).forEach(function(a){a=d[a];sb.isObservable(a)&&b.push(a)});return new sb.BindingChain(c,b)};sb.observable=function(b){return(new sb.Observable(c,b)).property}})();
+var sb={expandable:function(){var d=function(){var c=sb.argumentsToArray(arguments);d.funcs.forEach(function(e){e.apply(d,c)})},a=sb.argumentsToArray(arguments);d.funcs=a.filter(function(c){return"function"===typeof c});d.expand=function(c){"function"===typeof c&&d.funcs.push(c);return d};return d},Observer:function(){var d=[];this.add=function(a){null===a||"undefined"===typeof a||0>d.indexOf(a)&&d.push(a)};this.notify=function(a,c){d.filter(function(e){var b=!1;Object.keys(e.inputs).forEach(function(a){e.inputs.hasOwnProperty(a)&&
+e.inputs[a]===c&&(b=!0)});return b}).forEach(function(c){c.notify(a)})};this.remove=function(a){a=d.lastIndexOf(a);0<=a&&d.splice(a,1)}},Binding:function(d,a,c,e){var b=this;b.inputs=a;b.outputs=c;b.computed=e;b.bind=function(){d.add(b);return b};b.unbind=function(){d.remove(b);return b};b.notify=function(d){var g=e(a),h=d[d.length-1];Object.keys(g).forEach(function(b){var a=c[b];h!==a&&(c.hasOwnProperty(b)&&sb.isObservable(a))&&a.notify(d,g[b])});return b}},isObservable:function(d){return"function"!==
+typeof d||!d.notify||"function"!==typeof d.notify?!1:!0},Observable:function(d,a){var c=this;c.property=function(d){void 0!==d&&c.property.notify([],d);return a};c.property.notify=function(e,b){0>e.lastIndexOf(c.property)&&(a=b,d.notify(e.concat(c.property),c.property))}}};
+(function(){sb.ObservableArray=function(d,a){var c=this,e=a;e instanceof Array||(e=[]);c.property=function(){return e.concat()};c.property.notify=function(b){0>b.lastIndexOf(c.property)&&d.notify(b.concat(c.property),c.property)};c.property.length=function(){return e.length};c.property.get=function(b){return e[b]};c.property.set=function(b,a){e[b]=a;c.property.notify([])};"push pop shift unshift splice reverse sort".split(" ").forEach(function(b){"function"===typeof e[b]&&(c.property[b]=function(){var a=
+sb.argumentsToArray(arguments),a=e[b].apply(e,a);c.property.notify([]);return a})});["concat","map","filter"].forEach(function(b){"function"===typeof e[b]&&(c.property[b]=function(){var a=sb.argumentsToArray(arguments),a=e[b].apply(e,a);return new sb.ObservableArray(d,a)})});"join toString toLocalString indexOf lastIndexOf forEach".split(" ").forEach(function(b){"function"===typeof e[b]&&(c.property[b]=function(){var a=sb.argumentsToArray(arguments);return e[b].apply(e,a)})})}})();
+(function(){sb.BindingChain=function(d,a){var c=sb.expandable(),e=[];this.synchronize=function(){var b=[];sb.argumentsToArray(arguments).forEach(function(c){sb.isObservable(c)&&(b.push(c),0>a.indexOf(c)&&a.push(c))});var f=b.map(function(a){var c={input:a},e={};b.forEach(function(b,c){a!==b&&(e["output"+c]=b)});return new sb.Binding(d,c,e,function(b){var a={};Object.keys(e).forEach(function(c){a[c]=b.input()});return a})});c.expand(function(){e=e.concat(f)});return this};this.computed=function(b,
+f){if(!sb.isObservable(b)||"function"!==typeof f)return this;0>a.indexOf(b)&&a.push(b);c.expand(function(){var c={};a.forEach(function(a,d){b!==a&&(c["input"+d]=a)});var h=new sb.Binding(d,c,{output:b},function(a){return{output:f(a)}});e.push(h)});return this};this.onChange=function(b,f){if(!sb.isObservable(b)||"function"!==typeof f)return this;a.indexOf(b)&&a.push(b);var g=new sb.Binding(d,{input:b},{},function(){f();return{}});c.expand(function(){e.push(g)});return this};this.bind=function(){this.unbind();
+c();e.forEach(function(a){a.bind()});return this};this.unbind=function(){e.forEach(function(a){a.unbind()});e=[];return this}}})();sb.argumentsToArray=function(d){var a=[];Object.keys(d).forEach(function(c){a.push(d[c])});return a};
+(function(){var d=new sb.Observer;sb.binding=function(){var a=sb.argumentsToArray(arguments).filter(function(a){return sb.isObservable(a)});return new sb.BindingChain(d,a)};sb.observable=function(a){return(new sb.Observable(d,a)).property};sb.observableArray=function(a){return(new sb.ObservableArray(d,a)).property}})();
 /**
  * @namespace
  */
 var d3binding = {};
-d3binding.expandable = function() {
-    
-    // created function
-    var that = function() {
-        var args = [];
-        for (i in arguments) {
-            if (arguments.hasOwnProperty(i)) {
-                args.push(arguments[i]);
-            }
-        }
-        that.funcs.forEach(function(f) {
-            f.apply(that, args);
-        });
-    };
-
-    that.funcs = [];
-
-    var args = arguments;
-    for (i in args) {
-        if (typeof args[i] === "function") {
-            Object.keys(args[i]).forEach(function(key){
-                if (args[i].hasOwnProperty(key)) {
-                    that[key] = args[i][key];
-                }
-            });
-            that.funcs.push(args[i]);
-        } 
-    }
-
-    // expand function
-    that.expand = function(newFunc) {
-        if (typeof newFunc === "function") {
-            that.funcs.push(newFunc);
-        }
-        return that;
-    };
-
-    return that;
-};
 (function() {
 d3binding.binding = function() {
 
-    var that = d3binding.expandable();
+    var that = sb.expandable();
     that.isTransition = false;
 
     that.transition = function() {
