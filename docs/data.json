@@ -1,0 +1,14 @@
+{
+    "project": {
+        "name": "d3binding",
+        "description": "Data binding library for d3js",
+        "version": "0.0.1",
+        "logo": "../img/logo.png",
+        "url": "https://github.com/tenntenn/d3binding"
+    },
+    "files": {},
+    "modules": {},
+    "classes": {},
+    "classitems": [],
+    "warnings": []
+}
