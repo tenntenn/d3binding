@@ -1,3 +1,0 @@
-package.js
-binding.js
-transform.js
