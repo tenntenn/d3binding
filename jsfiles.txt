@@ -1,4 +1,3 @@
-simple-binding.min.js
 package.js
 binding.js
 transform.js
