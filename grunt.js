@@ -15,14 +15,15 @@ module.exports = function(grunt) {
                                 ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
                 },
                 requirejs: {
-                        baseUrl: "src",
+                        baseUrl: ".",
                         paths: {
-                                "almond":"../lib/almond",
-                                "sb":"../simple-binding.js/src/sb/main"
+                                "almond":"lib/almond",
+                                "sb":"simple-binding.js/src/sb",
+                                "d3binding":"src/d3binding"
                         },
                         include: [
                                 "almond",
-                                "sb",
+                                "sb/main",
                                 "d3binding/main"
                         ],
                         exclude: [],

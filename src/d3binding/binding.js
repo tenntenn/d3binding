@@ -1,7 +1,7 @@
 define(
         'd3binding/binding',
         [
-                'sb'
+                'sb/main'
         ],
         function(sb) {
 
