@@ -44,7 +44,7 @@ define(
 				skewX.observable,
 				skewY.observable,
 				matrix.observable)
-				.compute(that, function() {
+				.computed(that, function() {
 					var results = [];
 
 					if (translate.observable()) {
@@ -78,7 +78,7 @@ define(
 					if (o(x) && o(y)) {
 						translate.observable("translate("+x()+","+y()+")");
 						translate.binding = sb.binding(translate.observable, x, y)
-						.compute(translate.observable, function() {
+						.computed(translate.observable, function() {
 							return "translate("+x()+","+y()+")";
 						}).bind();
 					}
@@ -89,7 +89,7 @@ define(
 					if (o(sx) && o(sy)) {
 						scale.observable("scale("+sx()+","+sy()+")");
 						scale.binding = sb.binding(scale.observable, sx, sy)
-						.compute(scale.observable, function() {
+						.computed(scale.observable, function() {
 							return "scale("+sx()+","+sy()+")";
 						}).bind();
 					}
@@ -103,13 +103,13 @@ define(
 						if (o(cy) && o(cx)) {
 							rotate.observable("rotate("+angle()+","+cx()+","+cy()+")");
 							rotate.binding = sb.binding(rotate.observable, angle, cx, cy)
-							.compute(rotate.observable, function() {
+							.computed(rotate.observable, function() {
 								return "rotate("+angle()+","+cx()+","+cy()+")";
 							}).bind();
 						} else {
 							rotate.observable("rotate("+angle()+")");
 							rotate.binding = sb.binding(rotate.observable, angle)
-							.compute(rotate.observable, function() {
+							.computed(rotate.observable, function() {
 								return "rotate("+angle()+")";
 							}).bind();
 						}
@@ -122,7 +122,7 @@ define(
 					if (o(angle)) {
 						skewX.observable("skewX("+angle()+")");
 						skewX.binding = sb.binding(skewX.observable, angle)
-						.compute(skewX.observable, function() {
+						.computed(skewX.observable, function() {
 							return "skewX("+angle()+")";
 						}).bind();
 					}
@@ -134,7 +134,7 @@ define(
 					if (o(angle)) {
 						skewY.observable("skewY("+angle()+")");
 						skewY.binding = sb.binding(skewY.observable, angle)
-						.compute(skewY.observable, function() {
+						.computed(skewY.observable, function() {
 							return "skewY("+angle()+")";
 						}).bind();
 					}
@@ -146,7 +146,7 @@ define(
 					if (o(a) && o(b) && o(c) && o(d) && o(e) && o(f)) {
 						matrix.observable("matrix("+a()+","+b()+","+c()+","+d()+","+e()+","+f()+")");
 						matrix.binding = sb.binding(matrix.observable, a, b, c, d, e, f)
-						.compute(matrix.observable, function() {
+						.computed(matrix.observable, function() {
 							return "matrix("+a()+","+b()+","+c()+","+d()+","+e()+","+f()+")";
 						}).bind();
 					}
