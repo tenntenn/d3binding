@@ -14,7 +14,7 @@ define(
 			this.y = sb.observable(y);
 			this.width = sb.observable(width);
 			this.height = sb.observable(height);
-			this.color = sb.observable(color);
+			this.color = sb.observable("red");
 			this.angle = sb.observable(0);
 			this.cx = sb.observable(this.width()/2);
 			this.cy = sb.observable(this.height()/2);
