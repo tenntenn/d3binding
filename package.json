@@ -1,27 +1,27 @@
 {
-  "author": "Takuya Ueda <uedatakuya@gmail.com> (http://u.hinoichi.net)",
-  "name": "d3binding",
-  "description": "Data binding library for d3js",
-  "version": "0.0.1",
-  "homepage": "https://github.com/tenntenn/d3binding",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/tenntenn/d3binding.git"
-  },
-  "engines": {
-    "node": "~0.6.10"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~0.3.17",
-    "grunt-requirejs": "~0.2.14",
-    "grunt-contrib-yuidoc": "~0.3.2"
-  },
-  "optionalDependencies": {},
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/tenntenn/d3binding/blob/master/LICENSE"
-    }
-  ]
+        "author": "Takuya Ueda <uedatakuya@gmail.com> (http://u.hinoichi.net)",
+        "name": "d3binding",
+        "description": "Data binding library for d3js",
+        "version": "0.0.1",
+        "homepage": "https://github.com/tenntenn/d3binding",
+        "repository": {
+                "type": "git",
+                "url": "git://github.com/tenntenn/d3binding.git"
+        },
+        "engines": {
+                "node": "~0.6.10"
+        },
+        "dependencies": {},
+        "devDependencies": {
+                "grunt": "~0.3.17",
+                "grunt-requirejs": "~0.2.14",
+                "grunt-contrib-yuidoc": "~0.3.2"
+        },
+        "optionalDependencies": {},
+        "licenses": [
+                {
+                "type": "MIT",
+                "url": "http://github.com/tenntenn/d3binding/blob/master/LICENSE"
+        }
+        ]
 }

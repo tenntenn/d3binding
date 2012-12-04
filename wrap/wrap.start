@@ -1,4 +1,5 @@
 (function (root, factory) {
         // Browser globals
-        root.d3binding = factory();
+		root.sb = root.sb || {};
+        root.sb.d3 = factory();
 }(this, function () {

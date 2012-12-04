@@ -18,12 +18,10 @@ module.exports = function(grunt) {
                         baseUrl: ".",
                         paths: {
                                 "almond":"lib/almond",
-                                "sb":"simple-binding.js/src/sb",
                                 "d3binding":"src/d3binding"
                         },
                         include: [
                                 "almond",
-                                "sb/main",
                                 "d3binding/main"
                         ],
                         exclude: [],

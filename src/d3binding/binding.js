@@ -1,9 +1,8 @@
 define(
         'd3binding/binding',
         [
-                'sb/main'
         ],
-        function(sb) {
+        function() {
 
             function common(that, name, value, funcname) {
                 that.expand(function(selection) {
