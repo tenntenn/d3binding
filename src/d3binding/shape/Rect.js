@@ -19,10 +19,10 @@ define(
 			this.cx = sb.observable(this.width()/2);
 			this.cy = sb.observable(this.height()/2);
 			sb.binding(this.x, this.y, this.width, this.height, this.cx, this.cy)
-				.compute(this.cx, function() {
+				.computed(this.cx, function() {
 					return this.width()/2;
 				})
-				.compute(this.cy, function() {
+				._(this.cy, function() {
 					return this.height()/2;
 				});
 
