@@ -11,7 +11,7 @@ define(
                         var v = value;
                         if (typeof v === "function") {
                             v = v(d);
-                            if (sb.base.observable.isObservable(v)) {
+                            if (sb.base.observable.isObservableObject(v)) {
                                 var o = v;
                                 sb.binding(o)
                                     .onChange(o, function() {
