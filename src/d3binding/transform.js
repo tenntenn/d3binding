@@ -1,7 +1,8 @@
 define(
 	'd3binding/transform',
 	[],
-	function(sb, o) {
+	function() {
+		var o = sb.base.observable.isObservable; 
 		function transform() {
 			var that = sb.observable("");
 
