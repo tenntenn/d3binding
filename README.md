@@ -1,12 +1,18 @@
 d3binding
 =========
 
-Data Binding plugin for d3.js
+Data Binding plugin of simple-binding.js for d3.js.
+
+Dependencies
+-------------
+
++ [simple-binding](https://github.com/tenntenn/simple-binding.js)
++ [d3js](http://d3js.org/)
 
 Build
 -------------
 
-    $ ./build
+    $ grunt
 
 Usage
 -------------
